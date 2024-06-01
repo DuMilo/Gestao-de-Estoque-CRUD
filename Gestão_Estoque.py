@@ -18,7 +18,7 @@ def adicionar_produto(nome_produto, quantidade, data_val):
     except FileNotFoundError:
         produtos = []
 
-    produtos.append({'nome_produto': nome_produto, 'quantidade': quantidade, 'data de validade': data_val})
+    produtos.append({'nome_produto': nome_produto, 'quantidade': quantidade, 'data_de_validade': data_val})
 
     with open(arquivo, 'w') as f:
         json.dump(produtos, f, indent=3)
@@ -37,7 +37,7 @@ def listar_produtos():
         print('-' * 30)
         for produto in produtos:
             print('*' * 30)
-            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data de validade']}")
+            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data_de_validade']}")
             print('*' * 30)
     else:
         print(Cores.VERMELHO + 'NENHUM PRODUTO ENCONTRADO.' + Cores.RESET)
@@ -53,7 +53,7 @@ def atualizar_produto(produto_antigo, produto_novo, quantidade_nova, data_val_no
         if produto['nome_produto'] == produto_antigo:
             produto['nome_produto'] = produto_novo
             produto['quantidade'] = quantidade_nova
-            produto['data de validade'] = data_val_nova
+            produto['data_de_validade'] = data_val_nova
             break
 
     with open(arquivo, 'w') as f:
@@ -71,7 +71,7 @@ def checar_produto(nome_produto):
 
     for produto in produtos:
         if produto['nome_produto'] == nome_produto:
-            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data de validade']}")
+            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data_de_validade']}")
             encontrado = True
             break
     if not encontrado:
@@ -105,7 +105,7 @@ def verificar_validade(nome_produto):
 
     for produto in produtos:
         if produto['nome_produto'] == nome_produto:
-            data_val = datetime.strptime(produto['data de validade'], '%Y-%m-%d')
+            data_val = datetime.strptime(produto['data_de_validade'], '%Y-%m-%d')
             if data_val < hoje:
                 produtos_vencidos.append(produto)
             elif hoje <= data_val <= hoje + alerta_periodo:
@@ -114,12 +114,12 @@ def verificar_validade(nome_produto):
     if produtos_vencidos:
         print(Cores.VERMELHO + 'PRODUTOS VENCIDOS:' + Cores.RESET)
         for produto in produtos_vencidos:
-            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data de validade']}")
+            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data_de_validade']}")
 
     if produtos_pra_vencer:
         print(Cores.VERMELHO + 'PRODUTOS A VENCER:' + Cores.RESET)
         for produto in produtos_pra_vencer:
-            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data de validade']}")
+            print(f"NOME DO PRODUTO: {produto['nome_produto']}, QUANTIDADE: {produto['quantidade']}, DATA DE VALIDADE: {produto['data_de_validade']}")
 
     if not produtos_vencidos:
         print(Cores.VERDE + 'NENHUM PRODUTO VENCIDO FOI ENCONTRADO.' + Cores.RESET)
